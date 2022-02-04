@@ -25,7 +25,7 @@ Flix is an app that allows users to browse movies from the [The Movie Database A
 ### App Walkthough GIF
 
 
-<img src="https://i.imgur.com/GdC67iW.mp4" width=250><br>
+<img src="https://i.imgur.com/2LxafQs.gif" width=250><br>
 
 ### Notes
 I did not realize rotation lock needed to be turned off on an emulator right away!
