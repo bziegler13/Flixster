@@ -11,13 +11,15 @@ public class Movie {
 
     String backdropPath;
     String posterPath;
+    String imageSize;
     String title;
     String overview;
-    public static final String IMAGE_URL = "https://image.tmdb.org/t/p/w342/";
+    public static final String IMAGE_URL = "https://image.tmdb.org/t/p/";
 
     public Movie(JSONObject jsonObject) throws JSONException {
         backdropPath = jsonObject.getString("backdrop_path");
         posterPath = jsonObject.getString("poster_path");
+        imageSize = "original";
         title = jsonObject.getString("title");
         overview = jsonObject.getString("overview");
     }
@@ -31,11 +33,11 @@ public class Movie {
     }
 
     public String getPosterPath() {
-        return IMAGE_URL + posterPath;
+        return IMAGE_URL + imageSize + "/" + posterPath;
     }
 
     public String getBackdropPath() {
-        return IMAGE_URL + backdropPath;
+        return IMAGE_URL + imageSize + "/" + backdropPath;
     }
 
     public String getTitle() {

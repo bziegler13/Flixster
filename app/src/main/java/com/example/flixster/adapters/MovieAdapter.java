@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,6 +58,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        RelativeLayout movieContainer;
         TextView tvTitle;
         TextView tvOverview;
         ImageView ivPoster;
@@ -65,6 +68,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+            movieContainer = itemView.findViewById(R.id.movieContainer);
         }
 
         public void bind(Movie movie) {
@@ -83,6 +87,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     .load(imageUrl)
                     .placeholder(R.mipmap.ic_launcher)
                     .into(ivPoster);
+
+            // 1. Register the click listener on the whole container
+            // 2. Navigate to a new activity (detail view) on the tap
+            movieContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(context, movie.getTitle(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
