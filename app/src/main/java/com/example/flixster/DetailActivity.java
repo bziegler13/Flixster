@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewDebug;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -18,7 +19,10 @@ import com.google.android.youtube.player.YouTubePlayerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
+
+import java.util.Iterator;
 
 import okhttp3.Headers;
 
@@ -57,9 +61,24 @@ public class DetailActivity extends YouTubeBaseActivity {
                     if (results.length() == 0) {
                         return;
                     }
-                    String youTubeKey = results.getJSONObject(0).getString("key");
-                    Log.d("DetailActivity", youTubeKey);
-                    initializeYoutube(youTubeKey);
+                    // look through results and find a youtube trailer.
+                    String youTubeKey;
+                    Log.d("DetailActivity", "Looking through JSON");
+                    for(int i = 0; i < results.length(); i++) {
+                        Log.d("DetailActivity", Integer.toString(i));
+                        String type = results.getJSONObject(i).getString("type");
+                        String site = results.getJSONObject(i).getString("site");
+                        Log.d("DetailActivity", type);
+                        Log.d("DetailActivity", site);
+                        if (type.equals("Trailer") && site.equals("YouTube")) {
+                            // found a youtube trailer
+                            youTubeKey = results.getJSONObject(i).getString("key");
+                            Log.d("DetailActivity", String.format("Found youtube trailer %s",youTubeKey));
+                            initializeYoutube(youTubeKey);
+                            break;
+                        }
+                    }
+
                 } catch (JSONException e) {
                     Log.e("DetailActivity", "Failed to parse JSON");
                     e.printStackTrace();
