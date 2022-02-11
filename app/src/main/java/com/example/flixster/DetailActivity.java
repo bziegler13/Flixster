@@ -63,18 +63,20 @@ public class DetailActivity extends YouTubeBaseActivity {
                     }
                     // look through results and find a youtube trailer.
                     String youTubeKey;
-                    Log.d("DetailActivity", "Looking through JSON");
                     for(int i = 0; i < results.length(); i++) {
-                        Log.d("DetailActivity", Integer.toString(i));
                         String type = results.getJSONObject(i).getString("type");
                         String site = results.getJSONObject(i).getString("site");
-                        Log.d("DetailActivity", type);
-                        Log.d("DetailActivity", site);
                         if (type.equals("Trailer") && site.equals("YouTube")) {
                             // found a youtube trailer
                             youTubeKey = results.getJSONObject(i).getString("key");
-                            Log.d("DetailActivity", String.format("Found youtube trailer %s",youTubeKey));
-                            initializeYoutube(youTubeKey);
+                            Log.d("DetailActivity", youTubeKey);
+                            if(movie.getRating() > 8.0) {
+                                initializeYoutube(youTubeKey, true);
+                                Log.d("DetailActivity", Double.toString(movie.getRating()));
+                            }
+                            else {
+                                initializeYoutube(youTubeKey, false);
+                            }
                             break;
                         }
                     }
@@ -93,15 +95,21 @@ public class DetailActivity extends YouTubeBaseActivity {
 
     }
 
-    private void initializeYoutube(final String youTubeKey) {
+    // pass the initialize method a boolean to tell it whether it should autoplay or not
+    private void initializeYoutube(final String youTubeKey, boolean autoplay) {
         // initialize with API key stored in secrets.xml
         youTubePlayerView.initialize(getString(R.string.youtube_api_key), new YouTubePlayer.OnInitializedListener() {
 
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 Log.d("DetailActivity", "onInitializationSuccess");
-                youTubePlayer.cueVideo(youTubeKey);
 
+                if(autoplay){
+                    youTubePlayer.loadVideo(youTubeKey);
+                }
+                else {
+                    youTubePlayer.cueVideo(youTubeKey);
+                }
             }
 
             @Override
