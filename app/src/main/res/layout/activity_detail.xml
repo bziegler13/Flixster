@@ -25,6 +25,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Spider-Man: No Way Home"
+            android:textColor="@color/teal_700"
+            android:textStyle="bold"
+            android:typeface="serif"
             android:textAlignment="center"
             android:textSize="28sp" />
     </LinearLayout>
