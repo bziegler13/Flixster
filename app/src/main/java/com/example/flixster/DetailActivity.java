@@ -75,6 +75,7 @@ public class DetailActivity extends YouTubeBaseActivity {
     }
 
     private void initializeYoutube(final String youTubeKey) {
+        // initialize with API key stored in secrets.xml
         youTubePlayerView.initialize(getString(R.string.youtube_api_key), new YouTubePlayer.OnInitializedListener() {
 
             @Override
